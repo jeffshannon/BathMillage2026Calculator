@@ -1,13 +1,17 @@
-// Millage rates for Bath and East Lansing
-// Update these with the actual values from the official sources
+// Hard-coded millage rates for all municipalities
 const RATES = {
     bath: {
-        current: 0, // Current Bath millage rate (mills per $1,000)
-        proposed: 0 // Proposed Bath millage rate (mills per $1,000)
+        current: 8.1815,  // Current Bath Township rate (mills per $1,000)
+        proposed: 9.6467  // Proposed Bath Township rate (mills per $1,000)
     },
-    eastLansing: {
-        current: 0, // Current East Lansing millage rate (mills per $1,000)
-        proposed: 0 // Proposed East Lansing millage rate (mills per $1,000)
+    dewittTwp: {
+        current: 7.381   // DeWitt Township current rate (mills per $1,000)
+    },
+    dewittCity: {
+        current: 13.9593  // DeWitt City current rate (mills per $1,000)
+    },
+    meridian: {
+        current: 12.213   // Meridian Township current rate (mills per $1,000)
     }
 };
 
@@ -15,32 +19,9 @@ const RATES = {
 const taxableValueInput = document.getElementById('taxableValue');
 const calculateBtn = document.getElementById('calculateBtn');
 const resetBtn = document.getElementById('resetBtn');
-const cityBtns = document.querySelectorAll('.city-btn');
-const bathCalculator = document.getElementById('bathCalculator');
-const eastlansingCalculator = document.getElementById('eastlansingCalculator');
+const resultsSection = document.getElementById('resultsSection');
 
-// City selector
-let currentCity = 'bath';
-
-cityBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        currentCity = this.dataset.city;
-        cityBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        if (currentCity === 'bath') {
-            bathCalculator.style.display = 'block';
-            eastlansingCalculator.style.display = 'none';
-        } else {
-            bathCalculator.style.display = 'none';
-            eastlansingCalculator.style.display = 'block';
-        }
-        
-        resetCalculator();
-    });
-});
-
-// Initialize
+// Display rates on page load
 document.addEventListener('DOMContentLoaded', function() {
     displayRates();
     taxableValueInput.addEventListener('keypress', function(event) {
@@ -50,28 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Display current rates
+// Display the current and proposed rates
 function displayRates() {
-    // Bath rates
-    if (RATES.bath.current === 0 || RATES.bath.proposed === 0) {
-        document.getElementById('bathCurrentRate').textContent = 'N/A';
-        document.getElementById('bathProposedRate').textContent = 'N/A';
-    } else {
-        document.getElementById('bathCurrentRate').textContent = RATES.bath.current.toFixed(3);
-        document.getElementById('bathProposedRate').textContent = RATES.bath.proposed.toFixed(3);
-    }
-
-    // East Lansing rates
-    if (RATES.eastLansing.current === 0 || RATES.eastLansing.proposed === 0) {
-        document.getElementById('elCurrentRate').textContent = 'N/A';
-        document.getElementById('elProposedRate').textContent = 'N/A';
-    } else {
-        document.getElementById('elCurrentRate').textContent = RATES.eastLansing.current.toFixed(3);
-        document.getElementById('elProposedRate').textContent = RATES.eastLansing.proposed.toFixed(3);
-    }
+    document.getElementById('currentBathRate').textContent = RATES.bath.current.toFixed(4) + ' mills';
+    document.getElementById('proposedBathRate').textContent = RATES.bath.proposed.toFixed(4) + ' mills';
 }
 
-// Calculate taxes
+// Calculate tax differences
 function calculate() {
     const taxableValue = parseFloat(taxableValueInput.value);
 
@@ -81,79 +47,54 @@ function calculate() {
         return;
     }
 
-    if (currentCity === 'bath') {
-        calculateBath(taxableValue);
-    } else {
-        calculateEastLansing(taxableValue);
-    }
-}
-
-// Calculate Bath taxes
-function calculateBath(taxableValue) {
-    if (RATES.bath.current === 0 || RATES.bath.proposed === 0) {
-        alert('Bath millage rates are not yet configured. Please check back soon.');
-        return;
-    }
-
-    const currentTax = (taxableValue / 1000) * RATES.bath.current;
-    const proposedTax = (taxableValue / 1000) * RATES.bath.proposed;
-    const annualDifference = proposedTax - currentTax;
+    // Calculate Bath Township taxes
+    const currentBathTax = (taxableValue / 1000) * RATES.bath.current;
+    const proposedBathTax = (taxableValue / 1000) * RATES.bath.proposed;
+    const annualDifference = proposedBathTax - currentBathTax;
     const monthlyDifference = annualDifference / 12;
 
-    // Display results
-    document.getElementById('bathCurrentTax').textContent = formatCurrency(currentTax);
-    document.getElementById('bathProposedTax').textContent = formatCurrency(proposedTax);
-    document.getElementById('bathTaxDifference').textContent = formatCurrency(annualDifference);
-    document.getElementById('bathMonthlyDifference').textContent = formatCurrency(monthlyDifference);
+    // Display Bath Township results
+    document.getElementById('currentTax').textContent = formatCurrency(currentBathTax);
+    document.getElementById('proposedTax').textContent = formatCurrency(proposedBathTax);
+    document.getElementById('annualDifference').textContent = formatCurrency(annualDifference);
+    document.getElementById('monthlyDifference').textContent = formatCurrency(monthlyDifference);
 
-    // Update color
-    updateDifferenceColor(document.getElementById('bathTaxDifference'), annualDifference);
-
-    document.getElementById('bathResultsSection').style.display = 'block';
-    document.getElementById('bathResultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// Calculate East Lansing taxes
-function calculateEastLansing(taxableValue) {
-    if (RATES.eastLansing.current === 0 || RATES.eastLansing.proposed === 0) {
-        alert('East Lansing millage rates are not yet configured. Please check back soon.');
-        return;
-    }
-
-    const currentTax = (taxableValue / 1000) * RATES.eastLansing.current;
-    const proposedTax = (taxableValue / 1000) * RATES.eastLansing.proposed;
-    const annualDifference = proposedTax - currentTax;
-    const monthlyDifference = annualDifference / 12;
-
-    // Display results
-    document.getElementById('elCurrentTax').textContent = formatCurrency(currentTax);
-    document.getElementById('elProposedTax').textContent = formatCurrency(proposedTax);
-    document.getElementById('elTaxDifference').textContent = formatCurrency(annualDifference);
-    document.getElementById('elMonthlyDifference').textContent = formatCurrency(monthlyDifference);
-
-    // Update color
-    updateDifferenceColor(document.getElementById('elTaxDifference'), annualDifference);
-
-    document.getElementById('elResultsSection').style.display = 'block';
-    document.getElementById('elResultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// Update difference color
-function updateDifferenceColor(element, difference) {
-    if (difference > 0) {
-        element.style.color = '#d32f2f'; // Red for increase
-    } else if (difference < 0) {
-        element.style.color = '#388e3c'; // Green for decrease
+    // Update difference color
+    const differenceElement = document.getElementById('annualDifference');
+    if (annualDifference > 0) {
+        differenceElement.style.color = '#d32f2f'; // Red for increase
+    } else if (annualDifference < 0) {
+        differenceElement.style.color = '#388e3c'; // Green for decrease
     } else {
-        element.style.color = '#764ba2'; // Purple for no change
+        differenceElement.style.color = '#666'; // Gray for no change
     }
+
+    // Calculate and display comparison taxes
+    const dewittTwpTax = (taxableValue / 1000) * RATES.dewittTwp.current;
+    const dewittCityTax = (taxableValue / 1000) * RATES.dewittCity.current;
+    const meridianTax = (taxableValue / 1000) * RATES.meridian.current;
+
+    // Update comparison table
+    document.getElementById('bathCurrentRate').textContent = RATES.bath.current.toFixed(4);
+    document.getElementById('bathCurrentTaxComp').textContent = formatCurrency(currentBathTax);
+    document.getElementById('bathProposedRate').textContent = RATES.bath.proposed.toFixed(4);
+    document.getElementById('bathProposedTaxComp').textContent = formatCurrency(proposedBathTax);
+    document.getElementById('dewittTwpRate').textContent = RATES.dewittTwp.current.toFixed(4);
+    document.getElementById('dewittTwpTax').textContent = formatCurrency(dewittTwpTax);
+    document.getElementById('dewittCityRate').textContent = RATES.dewittCity.current.toFixed(4);
+    document.getElementById('dewittCityTax').textContent = formatCurrency(dewittCityTax);
+    document.getElementById('meridianRate').textContent = RATES.meridian.current.toFixed(4);
+    document.getElementById('meridianTax').textContent = formatCurrency(meridianTax);
+
+    // Show results
+    resultsSection.style.display = 'block';
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Reset calculator
-function resetCalculator() {
+function reset() {
     taxableValueInput.value = '';
-    document.getElementById('bathResultsSection').style.display = 'none';
-    document.getElementById('elResultsSection').style.display = 'none';
+    resultsSection.style.display = 'none';
     taxableValueInput.focus();
 }
 
@@ -169,4 +110,4 @@ function formatCurrency(value) {
 
 // Event listeners
 calculateBtn.addEventListener('click', calculate);
-resetBtn.addEventListener('click', resetCalculator);
+resetBtn.addEventListener('click', reset);

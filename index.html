@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bath & East Lansing Millage 2026 Calculator</title>
+    <title>Bath Millage 2026 Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Millage 2026 Calculator</h1>
-            <p class="subtitle">Compare property tax differences for proposed millage increases</p>
+            <h1>Bath Millage 2026 Calculator</h1>
+            <p class="subtitle">See how the Bath Township millage increase compares to other local municipalities</p>
         </header>
-
-        <div class="city-selector">
-            <button class="city-btn active" data-city="bath">Bath</button>
-            <button class="city-btn" data-city="eastlansing">East Lansing</button>
-        </div>
 
         <div class="calculator">
             <div class="input-section">
@@ -31,102 +26,90 @@
                 <small class="help-text">Enter your home's assessed/taxable value</small>
             </div>
 
-            <div id="bathCalculator" class="city-calculator">
-                <h2>Bath Community Schools</h2>
-                <div class="rates-section">
-                    <div class="rate-box">
-                        <h3>Current Millage Rate</h3>
-                        <div class="rate-value" id="bathCurrentRate">Loading...</div>
-                        <small class="rate-label">mills per $1,000 of value</small>
-                    </div>
-
-                    <div class="rate-box">
-                        <h3>Proposed Millage Rate</h3>
-                        <div class="rate-value" id="bathProposedRate">Loading...</div>
-                        <small class="rate-label">mills per $1,000 of value</small>
-                    </div>
-                </div>
-
-                <div class="results-section" id="bathResultsSection" style="display: none;">
-                    <div class="result-box">
-                        <span class="result-label">Current Annual Tax:</span>
-                        <span class="result-amount" id="bathCurrentTax">$0.00</span>
-                    </div>
-
-                    <div class="result-box">
-                        <span class="result-label">Proposed Annual Tax:</span>
-                        <span class="result-amount" id="bathProposedTax">$0.00</span>
-                    </div>
-
-                    <div class="result-box highlight">
-                        <span class="result-label">Annual Difference:</span>
-                        <span class="result-amount difference" id="bathTaxDifference">$0.00</span>
-                    </div>
-
-                    <div class="result-box">
-                        <span class="result-label">Monthly Difference:</span>
-                        <span class="result-amount" id="bathMonthlyDifference">$0.00</span>
-                    </div>
-                </div>
-
-                <footer class="info-section">
-                    <p class="info-text">
-                        For more information, visit 
-                        <a href="https://bathmillage2026.com" target="_blank">bathmillage2026.com</a>
-                    </p>
-                </footer>
+            <div class="info-box">
+                <h3>Current Bath Township Millage Rate</h3>
+                <p class="rate-display" id="currentBathRate">Loading...</p>
+                <small>mills per $1,000 of taxable value</small>
             </div>
 
-            <div id="eastlansingCalculator" class="city-calculator" style="display: none;">
-                <h2>East Lansing Public Schools</h2>
-                <div class="rates-section">
-                    <div class="rate-box">
-                        <h3>Current Millage Rate</h3>
-                        <div class="rate-value" id="elCurrentRate">Loading...</div>
-                        <small class="rate-label">mills per $1,000 of value</small>
-                    </div>
-
-                    <div class="rate-box">
-                        <h3>Proposed Millage Rate</h3>
-                        <div class="rate-value" id="elProposedRate">Loading...</div>
-                        <small class="rate-label">mills per $1,000 of value</small>
-                    </div>
-                </div>
-
-                <div class="results-section" id="elResultsSection" style="display: none;">
-                    <div class="result-box">
-                        <span class="result-label">Current Annual Tax:</span>
-                        <span class="result-amount" id="elCurrentTax">$0.00</span>
-                    </div>
-
-                    <div class="result-box">
-                        <span class="result-label">Proposed Annual Tax:</span>
-                        <span class="result-amount" id="elProposedTax">$0.00</span>
-                    </div>
-
-                    <div class="result-box highlight">
-                        <span class="result-label">Annual Difference:</span>
-                        <span class="result-amount difference" id="elTaxDifference">$0.00</span>
-                    </div>
-
-                    <div class="result-box">
-                        <span class="result-label">Monthly Difference:</span>
-                        <span class="result-amount" id="elMonthlyDifference">$0.00</span>
-                    </div>
-                </div>
-
-                <footer class="info-section">
-                    <p class="info-text">
-                        For more information about East Lansing schools, visit your district website
-                    </p>
-                </footer>
+            <div class="info-box highlight">
+                <h3>Proposed Bath Township Millage Rate</h3>
+                <p class="rate-display proposed" id="proposedBathRate">Loading...</p>
+                <small>mills per $1,000 of taxable value</small>
             </div>
 
-            <div class="button-group">
-                <button id="calculateBtn" class="calculate-btn">Calculate</button>
-                <button id="resetBtn" class="reset-btn">Reset</button>
+            <button id="calculateBtn" class="calculate-btn">Calculate Tax Impact</button>
+            <button id="resetBtn" class="reset-btn">Reset</button>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="result-box">
+                    <span class="result-label">Current Annual Tax (Bath Township):</span>
+                    <span class="result-amount" id="currentTax">$0.00</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-label">Proposed Annual Tax (Bath Township):</span>
+                    <span class="result-amount" id="proposedTax">$0.00</span>
+                </div>
+
+                <div class="result-box highlight">
+                    <span class="result-label">Annual Difference:</span>
+                    <span class="result-amount difference" id="annualDifference">$0.00</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-label">Monthly Difference:</span>
+                    <span class="result-amount" id="monthlyDifference">$0.00</span>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; text-align: center; color: #333;">How This Compares to Other Municipalities</h3>
+
+                <div class="comparison-table">
+                    <div class="comparison-row header-row">
+                        <div class="comparison-cell">Municipality</div>
+                        <div class="comparison-cell">Current Millage Rate</div>
+                        <div class="comparison-cell">Your Annual Tax</div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><strong>Bath Township (Current)</strong></div>
+                        <div class="comparison-cell" id="bathCurrentRate">-</div>
+                        <div class="comparison-cell" id="bathCurrentTaxComp">-</div>
+                    </div>
+
+                    <div class="comparison-row highlight-row">
+                        <div class="comparison-cell"><strong>Bath Township (Proposed)</strong></div>
+                        <div class="comparison-cell" id="bathProposedRate">-</div>
+                        <div class="comparison-cell" id="bathProposedTaxComp">-</div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><strong>DeWitt Township</strong></div>
+                        <div class="comparison-cell" id="dewittTwpRate">-</div>
+                        <div class="comparison-cell" id="dewittTwpTax">-</div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><strong>DeWitt City</strong></div>
+                        <div class="comparison-cell" id="dewittCityRate">-</div>
+                        <div class="comparison-cell" id="dewittCityTax">-</div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><strong>Meridian Township</strong></div>
+                        <div class="comparison-cell" id="meridianRate">-</div>
+                        <div class="comparison-cell" id="meridianTax">-</div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <footer class="info-section">
+            <p class="info-text">
+                For more information about the proposed millage increase, visit 
+                <a href="https://bathmillage2026.com" target="_blank">bathmillage2026.com</a>
+            </p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
