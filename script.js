@@ -1,8 +1,8 @@
 // Millage rates - Update these with the actual values from bathmillage2026.com
 // These are placeholder values - replace with actual rates
 const RATES = {
-    current: 0, // Current millage rate (mills per $1,000)
-    proposed: 0 // Proposed millage rate (mills per $1,000)
+    current: 3.5348, // Current millage rate (mills per $1,000)
+    proposed: 5 // Proposed millage rate (mills per $1,000)
 };
 
 // DOM Elements
