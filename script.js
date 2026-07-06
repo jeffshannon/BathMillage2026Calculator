@@ -90,7 +90,7 @@ function calculate() {
     document.getElementById('meridianRate').textContent = RATES.meridian.current.toFixed(4);
     document.getElementById('meridianTax').textContent = formatCurrency(meridianTax);
     document.getElementById('elcityRate').textContent = RATES.elcity.current.toFixed(4);
-    document.getElementById('elcityTax').textContent = formatCurrency(ELCityTax);
+    document.getElementById('elcityTax').textContent = formatCurrency(elcityTax);
 
     // Show results
     resultsSection.style.display = 'block';
