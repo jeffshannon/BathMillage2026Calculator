@@ -78,15 +78,32 @@ function calculate() {
     const meridianTax = (taxableValue / 1000) * RATES.meridian.current;
     const elcityTax = (taxableValue / 1000) * RATES.elcity.current;
 
+    // Calculate differences vs proposed Bath
+    const dewittTwpDiff = dewittTwpTax - proposedBathTax;
+    const dewittCityDiff = dewittCityTax - proposedBathTax;
+    const meridianDiff = meridianTax - proposedBathTax;
+    const elcityDiff = elcityTax - proposedBathTax;
+
     // Update comparison table
     document.getElementById('dewittTwpRate').textContent = RATES.dewittTwp.current.toFixed(4);
     document.getElementById('dewittTwpTax').textContent = formatCurrency(dewittTwpTax);
+    document.getElementById('dewittTwpDiff').textContent = formatCurrencyWithSign(dewittTwpDiff);
+    document.getElementById('dewittTwpDiff').style.color = getDiffColor(dewittTwpDiff);
+    
     document.getElementById('dewittCityRate').textContent = RATES.dewittCity.current.toFixed(4);
     document.getElementById('dewittCityTax').textContent = formatCurrency(dewittCityTax);
+    document.getElementById('dewittCityDiff').textContent = formatCurrencyWithSign(dewittCityDiff);
+    document.getElementById('dewittCityDiff').style.color = getDiffColor(dewittCityDiff);
+    
     document.getElementById('meridianRate').textContent = RATES.meridian.current.toFixed(4);
     document.getElementById('meridianTax').textContent = formatCurrency(meridianTax);
+    document.getElementById('meridianDiff').textContent = formatCurrencyWithSign(meridianDiff);
+    document.getElementById('meridianDiff').style.color = getDiffColor(meridianDiff);
+    
     document.getElementById('elcityRate').textContent = RATES.elcity.current.toFixed(4);
     document.getElementById('elcityTax').textContent = formatCurrency(elcityTax);
+    document.getElementById('elcityDiff').textContent = formatCurrencyWithSign(elcityDiff);
+    document.getElementById('elcityDiff').style.color = getDiffColor(elcityDiff);
 
     // Show results
     resultsSection.style.display = 'block';
@@ -108,6 +125,29 @@ function formatCurrency(value) {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }).format(value);
+}
+
+// Format currency with sign (+ or -)
+function formatCurrencyWithSign(value) {
+    const formatted = formatCurrency(Math.abs(value));
+    if (value > 0) {
+        return '+' + formatted;
+    } else if (value < 0) {
+        return '-' + formatted;
+    } else {
+        return formatted;
+    }
+}
+
+// Get color based on difference
+function getDiffColor(diff) {
+    if (diff > 0) {
+        return '#388e3c'; // Green - other municipality is cheaper
+    } else if (diff < 0) {
+        return '#d32f2f'; // Red - proposed Bath is cheaper
+    } else {
+        return '#666'; // Gray - same
+    }
 }
 
 // Event listeners

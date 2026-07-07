@@ -20,7 +20,7 @@ body {
     background: white;
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    max-width: 700px;
+    max-width: 900px;
     width: 100%;
     overflow: hidden;
 }
@@ -78,6 +78,15 @@ input[type="number"]:focus {
     margin-top: 6px;
     color: #999;
     font-size: 12px;
+}
+
+.help-text a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.help-text a:hover {
+    text-decoration: underline;
 }
 
 .info-box {
@@ -216,8 +225,8 @@ input[type="number"]:focus {
 
 .comparison-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid #e0e0e0;
     align-items: center;
@@ -286,6 +295,18 @@ input[type="number"]:focus {
     text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+    .comparison-row {
+        grid-template-columns: 1fr 0.8fr 0.8fr 0.8fr;
+        gap: 8px;
+        font-size: 11px;
+    }
+    
+    .comparison-cell {
+        font-size: 11px;
+    }
+}
+
 @media (max-width: 480px) {
     header {
         padding: 30px 20px;
@@ -316,5 +337,9 @@ input[type="number"]:focus {
 
     .result-amount.difference {
         font-size: 18px;
+    }
+    
+    .comparison-cell {
+        text-align: left;
     }
 }
