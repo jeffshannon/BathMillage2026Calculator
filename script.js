@@ -142,9 +142,9 @@ function formatCurrencyWithSign(value) {
 // Get color based on difference
 function getDiffColor(diff) {
     if (diff > 0) {
-        return '#388e3c'; // Green - other municipality is cheaper
-    } else if (diff < 0) {
         return '#d32f2f'; // Red - proposed Bath is cheaper
+    } else if (diff < 0) {
+        return '#388e3c'; // Green - other municipality is cheaper
     } else {
         return '#666'; // Gray - same
     }
